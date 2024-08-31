@@ -355,6 +355,14 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.4f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/2022.3.4f1/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
+"Assets/Scripts/CharacterFactory.cs"
+"Assets/Scripts/CharacterManager.cs"
+"Assets/Scripts/Child.cs"
+"Assets/Scripts/GameManager.cs"
+"Assets/Scripts/Interface.cs"
+"Assets/Scripts/OOPSceneManager.cs"
+"Assets/Scripts/Parent.cs"
+"Assets/Scripts/Person.cs"
 "Assets/Scripts/TitleManager.cs"
 -langversion:9.0
 
