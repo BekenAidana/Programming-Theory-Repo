@@ -10,8 +10,7 @@ public class CharacterFactory : MonoBehaviour
     {
         GameObject parentObject = Instantiate(parentPrefab, transform);
         Parent parent = parentObject.GetComponent<Parent>();
-        parent.personName = name;
-        parent.age = age;
+        parent.Initialize(name, age);
         return parentObject;
     }
 
@@ -19,8 +18,7 @@ public class CharacterFactory : MonoBehaviour
     {
         GameObject childObject = Instantiate(childPrefab, parent);
         Child child = childObject.GetComponent<Child>();
-        child.personName = name;
-        child.age = age;
+        child.Initialize(name, age);
         return childObject;
     }
 }

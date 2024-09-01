@@ -358,6 +358,7 @@
 "Assets/Scripts/CharacterFactory.cs"
 "Assets/Scripts/CharacterManager.cs"
 "Assets/Scripts/Child.cs"
+"Assets/Scripts/Enum.cs"
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/Interface.cs"
 "Assets/Scripts/OOPSceneManager.cs"

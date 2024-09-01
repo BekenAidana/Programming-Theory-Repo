@@ -1,3 +1,5 @@
+using System;
+using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,9 +7,11 @@ public class CharacterManager : MonoBehaviour
 {
     [SerializeField] private InputField nameInput;
     [SerializeField] private InputField ageInput;
+    [SerializeField] private InputField moneyInput;
     [SerializeField] private CharacterFactory characterFactory; 
     [SerializeField] private Transform characterContainer;
     [SerializeField] private Text feedbackText;
+    [SerializeField] private GameObject selectIndicator;
     public Parent parentInstance;
     public Child childInstance;
     private Person selectedPerson;
@@ -21,16 +25,22 @@ public class CharacterManager : MonoBehaviour
         }
         return true;
     }
+    private bool CheckIntNumber(string text)
+    {
+        int value;
+        if (!int.TryParse(text, out value))
+        {
+            feedbackText.text = "Please enter a valid age (whole number).";
+            return false;
+        }
+        return true;
+    }
     public void CreatePerson()
     {
         string name = nameInput.text;
+        if(!CheckIntNumber(ageInput.text)){return;}
         int age = int.Parse(ageInput.text);
-
-        if (!int.TryParse(ageInput.text, out age))
-        {
-            feedbackText.text = "Please enter a valid age (whole number).";
-            return;
-        }
+        if(age<0){feedbackText.text = "Please enter a possitive number";}
 
         if(age<18)
         {
@@ -46,6 +56,10 @@ public class CharacterManager : MonoBehaviour
                 CreateParent(name, age);
             }
         }
+        if((childInstance != null) & (parentInstance !=null))
+        {
+            OOPSceneManager.Instance.ChangeStage(OOPSceneStage.instructionInheritance);
+        } 
     }
 
     public void CreateParent(string name, int age)
@@ -62,10 +76,43 @@ public class CharacterManager : MonoBehaviour
         childInstance.OnSelected += OnPersonSelected;
         feedbackText.text = $"{childInstance.Nick} {name}, age {age}, was created.";
     }
-
-    public void OnPersonSelected(Person selectedPerson)
+    public void CleanUp()
     {
-        this.selectedPerson = selectedPerson;
-        feedbackText.text = $"{selectedPerson.personName} {selectedPerson.Nick} is selected.";
+        if (CheckWasSelected())
+        {
+            feedbackText.text = selectedPerson.PerformCleanUp();
+        }
+    }
+    public void TransferMoney()
+    {
+        if(!CheckIntNumber(moneyInput.text)){return;}
+        int amount = int.Parse(moneyInput.text);
+        if (CheckWasSelected())
+        {
+            Person targetPerson;
+            if(selectedPerson==parentInstance){targetPerson = childInstance;}
+            else{targetPerson = parentInstance;}
+            Debug.Log(targetPerson);
+            feedbackText.text = selectedPerson.GiveMoney(targetPerson, amount);
+        }
+    }
+    private bool CheckWasSelected()
+    {
+        if (selectedPerson==null)
+        {   
+            feedbackText.text = "Please, Select a person.";
+            return false;
+        }
+        return true;
+    }
+    public void OnPersonSelected(Person person)
+    {
+        if (selectIndicator.activeSelf==false)
+        {   
+            selectIndicator.SetActive(true);
+        }
+        this.selectedPerson = person;
+        selectIndicator.transform.position = selectedPerson.transform.position + new Vector3(0,-2f,0);
+        feedbackText.text = $"{selectedPerson.Name} {selectedPerson.Nick} is selected. Money: {selectedPerson.Money}";
     }
 }

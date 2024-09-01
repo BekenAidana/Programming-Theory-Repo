@@ -4,27 +4,31 @@ using UnityEngine;
 
 public class Child : Person
 {
-    public Child()
+    private void Awake()
     {
-        Nick = "Child"; 
+        Nick = "Child";
+        money = 500;
     }
-
     public override string PerformCleanUp()
     {
-        return $"{personName} child has put away toys";
+        return $"{Name} {Nick} has put away toys";
     }
     public override string GiveMoney(Person recipient, int amount)
     {
-        return $"{personName} child can't give money";
+        return $"{Name} {Nick} can't give money";
     }
     
-    public override string ReceiveMoney(int amount)
+    public override bool ReceiveMoney(int amount)
     {
         if (amount > 500)
         {
-            return $"{personName} child can't receive more than 500$";
+            return false;
         }
         return base.ReceiveMoney(amount);
+    }
+    public override string ReasonCannotReceiveMoney()
+    {
+        return $"{Name} {Nick} can't receive more than 500$";
     }
 
 }
